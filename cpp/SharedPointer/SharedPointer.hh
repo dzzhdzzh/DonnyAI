@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <utility>
 
 namespace Utility
 {
@@ -52,7 +53,7 @@ private:
 void release();
 
 /// @brief increment the counter;
-void increment();
+void increment() const;
 
 /// @brief Data raw pointer.
 T* data_{nullptr};

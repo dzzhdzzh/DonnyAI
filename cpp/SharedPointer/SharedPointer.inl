@@ -1,8 +1,10 @@
+#include <stdexcept>
+
 namespace Utility
 {
 template<class T>
 SharedPointer<T>::SharedPointer(T* ptr)
-: ptr_{ptr}, counter_{new uint32_t(1U)}
+: data_{ptr}, counter_{new uint32_t(1U)}
 {
 }
 
@@ -33,13 +35,13 @@ auto SharedPointer<T>::operator=(const SharedPointer& other) -> SharedPointer&
 }
 
 template<class T>
-SharedPointer<T>::SharedPointer(SharedPointer&& other)
+SharedPointer<T>::SharedPointer(SharedPointer&& other) noexcept
 {
   *this = std::move(other);
 }
 
 template<class T>
-auto SharedPointer<T>::operator=(SharedPointer&& other) -> SharedPointer&
+auto SharedPointer<T>::operator=(SharedPointer&& other) noexcept -> SharedPointer&
 { 
   if(data_ != other.data_)
   {
@@ -69,7 +71,7 @@ T& SharedPointer<T>::operator*() const
 }
 
 template<class T>
-T* operator->() const
+T* SharedPointer<T>::operator->() const
 {
   if(data_ == nullptr)
   {
@@ -80,7 +82,7 @@ T* operator->() const
 }
 
 template<class T>
-uint32_t use_count() const
+uint32_t SharedPointer<T>::use_count() const
 {
   if(counter_ == nullptr)
   {
@@ -105,7 +107,7 @@ void SharedPointer<T>::release()
 }
 
 template<class T>
-void SharedPointer<T>::increment()
+void SharedPointer<T>::increment() const
 {
   if(counter_ != nullptr)
   {
