@@ -1,10 +1,10 @@
 #pragma once
 
 #include <cstdint>
-#include <utility>
 
 namespace Utility
 {
+/// @brief An implmentation of shared pointer.  
 template<class T>
 class SharedPointer
 {
@@ -67,4 +67,4 @@ template<class T, class... Args>
 SharedPointer<T> make_shared(Args&&... args);
 }
 
-#include "cpp/SharedPointer/SharedPointer.inl"
+#include "SharedPointer.inl"
